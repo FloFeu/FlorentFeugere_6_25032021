@@ -8,6 +8,7 @@ module.exports = (req, res, next) => {
         if (req.body.userId && req.body.userId !== userId) {
             throw 'User Id non valable !';
         } else {
+            res.header('Authorization', 'BEARER ' + token);
             next();
         }
     } catch (error) {

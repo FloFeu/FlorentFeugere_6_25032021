@@ -1,10 +1,12 @@
-## Piquante
+Bienvenue sur le Repo du Projet 6 So Peckoko du parcours Développeur Web d'OpenClassrooms.
 
-Le projet a été généré avec [Angular CLI](https://github.com/angular/angular-cli) version 7.0.2.
-
-Pour faire fonctionner le projet, vous devez installer node-sass à part.
-
-## Development server
-
-Démarrer `ng serve` pour avoir accès au serveur de développement. Rendez-vous sur `http://localhost:4200/`. L'application va se recharger automatiquement si vous modifiez un fichier source.
-# FlorentFeugere_6_25032021
+Pour lancer l'environnement, 
+1. Ouvrir un terminal et exécuter la commande "npm install".
+2. Une fois les packages installés, exécuter la commande "npm start".
+3. Ouvrir un deuxième terminal dans le dossier backend, et exécuter la commande "npm install".
+4. Créer un fichier .env dans le dossier backend, et y ajouter: 
+    DB_USER = <UserId>
+    DB_PASSWORD = <Password>
+en remplaçant <UserId> par votre login et <Password> par votre mot de passe MongoDB.
+5. Exécuter la commande "nodemon serve".
+6. Si tout s'est bien déroulé, vous êtes correctement connecté à la base de données
