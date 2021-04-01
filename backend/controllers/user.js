@@ -1,12 +1,19 @@
+"use strict";
+
 const bcrypt = require('bcrypt');
 const jwt = require('jsonwebtoken');
 const User = require('../models/User');
 
+const MaskData = require('maskdata');
+
+
 exports.signup = (req, res, next) => {
+    // Cryptage du mot de passage avec 10 salages pour renforcer le cryptage.
     bcrypt.hash(req.body.password, 10)
         .then(hash => {
             const user = new User({
-                email: req.body.email,
+                // Utilisation de MaskData pour masquer l'email dans la BDD
+                email: MaskData.maskEmail2(req.body.email),
                 password: hash
             });
             user.save()
@@ -17,7 +24,7 @@ exports.signup = (req, res, next) => {
 };
 
 exports.login = (req, res, next) => {
-    User.findOne({ email: req.body.email })
+    User.findOne({ email: MaskData.maskEmail2(req.body.email) })
         .then(user => {
             if (!user) {
                 

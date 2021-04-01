@@ -1,3 +1,5 @@
+"use strict";
+
 const Sauce = require('../models/sauce');
 const fs = require('fs');
 
@@ -27,9 +29,9 @@ exports.getOneSauce = (req, res, next) => {
 exports.modifySauce = (req, res, next) => {
     const sauceObject = req.file ? //opérateur ternaire pour vérifier si la requête contient une nouvelle image
     { 
-        ...JSON.parse(req.body.sauce), //S'il y a une nouvelle image
+        ...JSON.parse(req.body.sauce),                                                  //S'il y a une nouvelle image
         imageUrl: `${req.protocol}://${req.get('host')}/images/${req.file.filename}`
-     } : { ...req.body };   //sinon on traite la requête pour modifier juste le texte       
+     } : { ...req.body };                                                               //sinon on traite la requête pour modifier juste le texte       
     Sauce.updateOne({ _id: req.params.id }, { ...sauceObject, _id: req.params.id })
         .then(() => res.status(200).json({ message: 'Sauce modifiée !'}))
         .catch(error => res.status(400).json({ error }));

@@ -1,20 +1,31 @@
+"use strict";
+
 const express = require('express');
 const morgan = require('morgan'); //plug-in de logs
 const mongoose = require('mongoose');
-const app = express();
+
 const path = require('path');
+
+const helmet = require('helmet');
+
 require('dotenv').config();
+
+const DB_USER = process.env.DB_USER;
+const DB_PASSWORD = process.env.DB_PASSWORD;
+const DB_ACCESS = process.env.DB_ACCESS;
 
 const sauceRoutes = require('./routes/sauce');
 const userRoutes = require('./routes/user');
 
-mongoose.connect(`mongodb+srv://${process.env.DB_USER}:${process.env.DB_PASSWORD}@cluster0.czp7y.mongodb.net/myFirstDatabase?retryWrites=true&w=majority`,
+mongoose.connect(`mongodb+srv://${DB_USER}:${DB_PASSWORD}@${DB_ACCESS}`,
     {
         useNewUrlParser: true,
         useUnifiedTopology: true
     })
     .then(() => console.log('Connexion à MongoDB réussie !'))
     .catch(() => console.log('Connexion à MongoDB échouée !'));
+
+const app = express();
 
 app.use((req, res, next) => {
     res.setHeader('Access-Control-Allow-Origin', '*');
@@ -23,9 +34,10 @@ app.use((req, res, next) => {
     next();
 });
 
-app.use(morgan('dev')); //log les événements lors d'appels au serveur
-app.use(express.json());
+app.use(helmet());          // Prévention des attaques
 
+app.use(morgan('dev'));     //log les événements lors d'appels au serveur
+app.use(express.json());
 
 app.use('/images', express.static(path.join(__dirname, 'images')));
 
