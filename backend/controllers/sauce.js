@@ -3,11 +3,13 @@
 const Sauce = require('../models/sauce');
 const fs = require('fs');
 
+
 exports.createSauce = (req, res, next) => {
     if (req.body == null) {
         res.status(400).json({ message: "Erreur dans la requête"});
         res.end();
     };
+    // 
     const sauceObject = JSON.parse(req.body.sauce);
     delete sauceObject._id;
     const sauce = new Sauce({

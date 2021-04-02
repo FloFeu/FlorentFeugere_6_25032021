@@ -4,7 +4,11 @@ const express = require('express');
 const router = express.Router();
 const userCtrl = require('../controllers/user');
 
-const rateLimit = require('express-rate-limit'); // Mise en place d'une limite de requêtes répétées vers l'API.
+// Mise en place d'une limite de requêtes répétées vers l'API.
+const rateLimit = require('express-rate-limit');
+
+// Mise en place d'un validateur d'inputs
+const { body, validationResult} = require('express-validator');
 
 // Limite de création de comptes fixée à 5 par heure.
 const createAccountLimiter = rateLimit({
@@ -18,7 +22,12 @@ const loginLimiter = rateLimit({
     max: 3 
 })
 
-router.post('/signup', createAccountLimiter, userCtrl.signup);
+router.post('/signup', [
+    // Vérification que l'email est au format demandé
+    body('email').isEmail(),
+    // le mdp doit avoir minimum 6 caractères.
+    body('password').isLength({ min: 6 })
+], createAccountLimiter, userCtrl.signup);
 router.post('/login', loginLimiter, userCtrl.login);
 
 module.exports = router;

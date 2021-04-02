@@ -3,6 +3,7 @@
 const http = require('http');
 const app = require('./app');
 
+// Faire en sorte que le port soit un nombre.
 const normalizePort = val => {
   const port = parseInt(val, 10);
 
@@ -14,9 +15,11 @@ const normalizePort = val => {
   }
   return false;
 };
+
 const port = normalizePort(process.env.PORT || '3000');
 app.set('port', port);
 
+// Gestion des erreurs si le port est déja utilisé ou si nous n'avons pas les droits d'accès
 const errorHandler = error => {
   if (error.syscall !== 'listen') {
     throw error;
