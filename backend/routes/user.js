@@ -8,7 +8,7 @@ const userCtrl = require('../controllers/user');
 const rateLimit = require('express-rate-limit');
 
 // Mise en place d'un validateur d'inputs
-const { body, validationResult} = require('express-validator');
+const { body, validationResult } = require('express-validator');
 
 // Limite de création de comptes fixée à 5 par heure.
 const createAccountLimiter = rateLimit({
